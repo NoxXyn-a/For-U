@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine ❤️</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:linear-gradient(135deg,#ffd1dc,#ff9eb5,#ffb7c5);
+  --card1:linear-gradient(135deg,#fff1f2,#ffd6e0);
+  --card2:linear-gradient(180deg,#fffafa,#ffe3ea);
+  --text:#444;
+  --accent:#c7435b;
+  --name:#ff5f8f;
+}
+
+body.dark{
+  --bg:linear-gradient(135deg,#2a0f1c,#3a1426,#4a1b30);
+  --card1:linear-gradient(135deg,#2b1a22,#3a1f2b);
+  --card2:linear-gradient(180deg,#2a1820,#3b1f2c);
+  --text:#f2dbe2;
+  --accent:#ff8fb1;
+  --name:#ff9fc4;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  background:var(--bg);
+  font-family:'Aldrich',sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  touch-action:none;
+}
+
+/* BLUR */
+body.blur::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  backdrop-filter:blur(6px);
+  background:rgba(0,0,0,.15);
+  z-index:1;
+}
+
+/* LOVE LAYER */
+#love-layer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:998;
+}
+
+/* BG LOVE */
+.bg-love{
+  position:fixed;
+  font-size:18px;
+  opacity:.5;
+  animation:floatUp linear forwards;
+}
+@keyframes floatUp{
+  from{transform:translateY(0) scale(.8);opacity:0}
+  20%{opacity:.6}
+  to{transform:translateY(-120vh) scale(1.4);opacity:0}
+}
+
+/* PAGE */
+.page{
+  position:absolute;
+  inset:0;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  z-index:2;
+}
+.page.active{display:flex}
+
+/* DARK TOGGLE */
+.toggle{
+  position:fixed;
+  top:14px;
+  right:14px;
+  background:var(--card1);
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:13px;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,.3);
+  z-index:999;
+}
+
+/* HOVER CARD */
+.hover-card{
+  width:320px;
+  height:180px;
+  background:var(--card1);
+  border-radius:24px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  box-shadow:0 20px 45px rgba(0,0,0,.35);
+  transition:.4s;
+}
+.hover-card:hover{transform:translateY(-8px) scale(1.05)}
+
+.hover-card h1{
+  font-family:'Pixelify Sans',cursive;
+  color:var(--accent);
+  font-size:clamp(22px,6vw,30px);
+}
+
+/* NEXT BUTTON */
+.next-btn{
+  margin-top:28px;
+  padding:14px 34px;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  font-family:'Pixelify Sans',cursive;
+  font-size:15px;
+  color:white;
+  background:linear-gradient(135deg,#ff6b9a,#ff3f78);
+  box-shadow:0 0 20px rgba(255,100,150,.7);
+}
+
+/* ENVELOPE */
+.envelope-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+.envelope-text{
+  font-family:'Pixelify Sans',cursive;
+  color:var(--accent);
+  font-size:clamp(16px,4.5vw,20px);
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{50%{transform:scale(1.08)}}
+
+.envelope{
+  width:90px;
+  cursor:pointer;
+  transition:.3s;
+}
+.envelope:hover{transform:scale(1.15) rotate(-5deg)}
+
+/* LETTER */
+.letter{
+  width:90%;
+  max-width:360px;
+  max-height:80vh;
+  padding:28px;
+  background:var(--card2);
+  border-radius:26px;
+  text-align:left; /* jadi rata kiri */
+  box-shadow:0 30px 60px rgba(0,0,0,.4);
+  overflow-y:auto;
+  scrollbar-width:none;
+}
+
+
+.letter::-webkit-scrollbar{
+  display:none;
+}
+
+.letter h2{
+  text-align:center;
+}
+
+.letter h2{
+  font-family:'Pixelify Sans',cursive;
+  color:var(--accent);
+}
+.name{color:var(--name)}
+#text{
+  margin-top:18px;
+  font-size:15px;
+  line-height:2.3;
+  color:var(--text);
+  white-space:pre-line;
+  text-align:justify;
+  text-indent:30px;
+  letter-spacing:0.3px;
+}
+#text span{
+  margin-bottom:2px;
+}
+
+.greeting{
+  display:block;
+  text-align:center;
+  font-weight:bold;
+  font-size:16px;
+  margin-bottom:10px;
+  text-indent:0; /* biar gak ikut indent */
+}
+.cursor{
+  display:inline-block;
+  width:2px;
+  height:18px;
+  background:var(--text);
+  margin-left:4px;
+  animation:blink 1s infinite;
+  vertical-align:bottom;
+}
+
+@keyframes blink{
+  50%{opacity:0;}
+}
+.author-sign{
+  margin-top:35px;
+  font-style:italic;
+  font-size:14px;
+  text-align:left;
+  opacity:0;
+  transition:opacity 1.5s ease;
+  color:var(--text);
+}
+
+/* Muncul hanya saat dark mode aktif */
+body.dark .author-sign{
+  opacity:0.8;
+}
+
+
+/* TYPE EFFECT */
+.char{
+  opacity:0;
+  animation:fade .8s forwards; /* lebih slow */
+}
+
+@keyframes fade{
+  to{
+    opacity:1;
+    text-shadow:0 0 8px rgba(255,150,180,.4);
+  }
+}
+
+
+/* WA BUTTONS */
+.wa-wrap{
+  display:none;
+  margin-top:22px;
+  gap:12px;
+  flex-direction:column;
+}
+.wa-btn{
+  padding:14px 22px;
+  border-radius:20px;
+  font-family:'Pixelify Sans',cursive;
+  font-size:15px;
+  cursor:pointer;
+  color:white;
+  box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+.wa-main{background:#25D366}
+.wa-shy{background:#ff5f8f}
+
+/* LOVE POP */
+.love{
+  position:fixed;
+  animation:float 1.4s forwards;
+}
+@keyframes float{
+  to{transform:translateY(-80px) scale(1.6);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div id="love-layer"></div>
+<div class="toggle" onclick="toggleDark()">🌙</div>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div class="hover-card">
+    <h1>💖 Happy Valentine Day 💖</h1>
+  </div>
+  <button class="next-btn" id="nextBtn">Next 💌</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="hover-card">
+    <div class="envelope-wrap">
+      <div class="envelope-text">Ada Surat Buat Kamu 💌</div>
+      <img src="envelope.png" class="envelope" onclick="goPage(3)">
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <div class="letter">
+    <h2>Untuk <span class="name">NATAAA</span> 🤍</h2>
+    <div id="text"></div>
+
+<div class="author-sign">—From Raihan Not Farhan</div>
+    <div class="wa-wrap" id="waWrap">
+      <div class="wa-btn wa-main" onclick="replyWA(1)">💬 Balas Aku</div>
+      <div class="wa-btn wa-shy" onclick="replyWA(2)">🙈 Aku Malu Tapi Mau Balas</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function requestFS(){
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen().catch(()=>{});
+  }
+}
+
+const jam=new Date().getHours();
+let greeting =
+  jam<12 ? "Good Morning🌞\nJangan lupa awali Pagimu dengan Sarapan bukan Harapan:)" :
+  jam<18 ? "Good Afternoon🌤\nSiang ini cerah, sama kayak masa depan kita (aminin dulu aja Izinn)." :
+           "Good Evening🌙\nMimpi indah ya, kalau mimpi aku jangan bangun dulu hehehe.";
+
+let message = "\nHai Nataaa,\nLucu banget kalau diingat, kita cuma nggak sengaja ketemu di Roblox. Awalnya cuma mabar biasa, nggak ada yang spesial. Tapi entah kenapa, dari yang cuma teman main, jadi teman cerita…\n\nAku sadar, aku sering banget ngilang. Tiba-tiba nggak ada kabar, kayak nggak mikirin perasaan kamu. Aku tau itu bikin kamu capek, bahkan sampai nangis. Dan jujur, itu hal yang paling bikin aku nyesel.\n\nMaaf ya.\nMaaf karena aku sering datang dan pergi sesuka hati.\nMaaf karena kamu harus sabar menghadapi sikap aku yang kadang kayak nggak peduli.\n\nTapi makasih… karena setiap kali aku balik, kamu masih ada. Masih mau jawab chat aku. Masih mau peduli, walaupun aku sering bikin kamu kecewa.\n\nAku nggak mau terus jadi orang yang suka ngilang.\nAku mau belajar lebih ngerti kamu, lebih jaga perasaan kamu, dan lebih menghargai kamu yang udah bertahan sejauh ini.";
+
+
+let i=0;
+
+function goPage(n){
+  requestFS();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+
+  if(n===3){
+    document.body.classList.add('blur');
+    startTyping();
+  }
+}
+
+function startTyping(){
+  const el=document.getElementById('text');
+  const letter=document.querySelector('.letter');
+  const wa=document.getElementById('waWrap');
+
+  el.innerHTML='';
+  wa.style.display='none';
+  letter.scrollTop=0;
+  i=0;
+
+  const greet=document.createElement('span');
+  greet.className='greeting';
+  greet.textContent=greeting;
+  el.appendChild(greet);
+
+  const cursor=document.createElement('span');
+  cursor.className='cursor';
+  el.appendChild(cursor);
+
+  function type(){
+    if(i < message.length){
+
+      const s=document.createElement('span');
+      s.className='char';
+      s.textContent=message[i];
+
+      el.insertBefore(s, cursor);
+
+      letter.scrollTop = letter.scrollHeight;
+
+      let delay = 65;
+
+      if(message[i] === ".") delay = 400;
+      if(message[i] === ",") delay = 200;
+      if(message[i] === "\n") delay = 600;
+      if(message[i] === "…") delay = 500;
+
+      if(Math.random()<0.06) love();
+
+      i++;
+      setTimeout(type, delay);
+
+    }else{
+      wa.style.display='flex';
+    }
+  }
+
+  setTimeout(type, 800);
+}
+
+function love(){
+  const l=document.createElement('div');
+  l.className='love';
+  l.innerHTML='❤️';
+  l.style.left=Math.random()*100+'vw';
+  l.style.top='70vh';
+  document.getElementById('love-layer').appendChild(l);
+  setTimeout(()=>l.remove(),1400);
+}
+
+function replyWA(type){
+  const phone="6281511248818";
+  const msg = type===1
+    ? "Aku udah baca suratnya 🤍\nAAAAAA AELLL JADI PENGEN GIGIT DEH"
+    : "Aku malu tapi seneng banget baca suratnya 🫶\nAAAAAA JADI MAU TERBANGGG";
+
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+function toggleDark(){
+  document.body.classList.toggle('dark');
+}
+
+/* PRANK NEXT */
+let prank=false;
+nextBtn.onclick=()=>{
+  requestFS();
+  if(!prank){
+    nextBtn.innerText="Eh belum 😝";
+    prank=true;
+  }else{
+    goPage(2);
+  }
+};
+
+/* AUTO BG LOVE */
+setInterval(()=>{
+  const h=document.createElement('div');
+  h.className='bg-love';
+  h.innerHTML=Math.random()>.5?'❤️':'💖';
+  h.style.left=Math.random()*100+'vw';
+  h.style.bottom='-20px';
+  h.style.animationDuration=6+Math.random()*4+'s';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),10000);
+},700);
+</script>
+
+</body>
+</html>
